@@ -1,5 +1,23 @@
 #!/bin/bash
 
+echo "Please provide the name of the VM:"
+read name
+
+while true; do
+    read -p "Is \"$name\" right? (y/n): " resp
+    if [ "$resp" = "y" ]; then
+        echo "The VM name is $name."
+        break
+    elif [ "$resp" = "n" ]; then
+        echo "Please re-enter the name:"
+        read name
+    else
+        echo "Please use y or n only."
+    fi
+done
+
+echo "$name"
+
 sudo virt-install \
 --name <NAME> \
 --os-variant debian12 \
