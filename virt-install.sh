@@ -19,7 +19,7 @@ done
 echo "$name"
 
 sudo virt-install \
---name <NAME> \
+--name $name \
 --os-variant debian12 \
 --vcpu 4 \
 --ram 8192 \
