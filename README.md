@@ -7,4 +7,4 @@ This repository contains various scripts I have created to assist with my homela
 ## 📂 Repo Structure
 
 scripting/
-- [kvm-virt-install](https://github.com/raoulmoise/scripting/blob/b76ecd6acb1c7589d85571e7cedd42488fca5855/virt-install.sh)
+- [kvm-virt-install](virt-install.sh)
