@@ -17,6 +17,9 @@ while true; do
 done
 
 echo "$name"
+ip addr
+read -p "Please provide the management VLAN ID: "  vlan
+echo "VLAN $vlan"
 
 sudo virt-install \
 --name $name \
