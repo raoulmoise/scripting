@@ -90,6 +90,18 @@ while true; do
 done
 sleep 2
 
+# Ask how many NICs the VM needs
+read -p "How many LMP interfaces do you want for this VM? " nic_count
+net_args=""
+
+for ((i=1; i<=nic_count; i++)); do
+    echo -e "Enter VLAN ID for LMP \e[34m$i\e[0m: "
+	read lmp_id
+    net_args+=" --network bridge=bondL-lmp-$lmp_id,model=virtio"
+done
+
+sleep 2
+
 #Verification if the VM exists
 
 if virsh list --all --name | grep -wq "$name"; then
@@ -116,6 +128,7 @@ sudo virt-install \
 --vcpu 4 \
 --ram 8192 \
 --network bridge:bondM-mng-$vlan \
+$net_args \
 --graphics vnc \
 --import \
 --disk path=$file,size=150,format=qcow2,bus=virtio \
