@@ -8,3 +8,4 @@ This repository contains various scripts I have created to assist with my homela
 
 scripting/
 - [kvm-virt-install](virt-install.sh)
+- [kvm-virsh-shutdown](virsh-shutdown.sh)
