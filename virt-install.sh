@@ -99,19 +99,19 @@ for ((i=1; i<=nic_count; i++)); do
     echo -e "Enter VLAN ID for LMP \e[34m$i\e[0m: "
 	read lmp_id
 	while true; do
-    echo -e "Is \e[34m$lmp_id\e[0m right? (y/n): "
-    read -e resp
-    if [ "$resp" = "y" ]; then
-        echo -e "The LMP ID is \e[34m$lmp_id\e[0m."
-		net_args+=" --network bridge=bondL-lmp-$lmp_id,model=virtio"
-        break
-    elif [ "$resp" = "n" ]; then
-        echo -e "Please re-enter the name:"
-        read lmp_id
-    else
-        echo -e "Please use y or n only."
-    fi
-done
+    		echo -e "Is \e[34m$lmp_id\e[0m right? (y/n): "
+    		read -e resp
+    	if [ "$resp" = "y" ]; then
+        	echo -e "The LMP ID is \e[34m$lmp_id\e[0m."
+			net_args+=" --network bridge=bondL-lmp-$lmp_id,model=virtio"
+        		break
+    	elif [ "$resp" = "n" ]; then
+        	echo -e "Please re-enter the name:"
+        	read lmp_id
+    	else
+        	echo -e "Please use y or n only."
+    	fi
+	done
     
 done
 
