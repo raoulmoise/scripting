@@ -1,11 +1,11 @@
 #!/bin/bash
 
-echo -e "\e[33m###Welcome to the installation  script for VM Image for KVM!###\e[0m"
+echo -e "\e[33m###Welcome to the installation  script for SBTS Image for KVM!###\e[0m"
 sleep 2
 now=$(date)
 echo -e "\e[33m$now\e[0m "
 sleep 2
-good_dir="/good/path/for/vm/images" #Location for where you need to put the script and images in order for the script to work
+good_dir="/var/lib/libvirt/images"
 
 #Current directory verification
 current_dir=$(pwd)
@@ -73,7 +73,8 @@ sleep 3
 #VLAN ID and network naming
 ip addr
 sleep 2
-read -p "Please provide the management VLAN ID: "  vlan
+echo -e "Please provide the management \e[34mVLAN ID\e[0m: "
+read vlan
 
 while true; do
     echo -e "Is \e[34m$vlan\e[0m right? (y/n): "
@@ -97,7 +98,21 @@ net_args=""
 for ((i=1; i<=nic_count; i++)); do
     echo -e "Enter VLAN ID for LMP \e[34m$i\e[0m: "
 	read lmp_id
-    net_args+=" --network bridge=bondL-lmp-$lmp_id,model=virtio"
+	while true; do
+    echo -e "Is \e[34m$lmp_id\e[0m right? (y/n): "
+    read -e resp
+    if [ "$resp" = "y" ]; then
+        echo -e "The LMP ID is \e[34m$lmp_id\e[0m."
+		net_args+=" --network bridge=bondL-lmp-$lmp_id,model=virtio"
+        break
+    elif [ "$resp" = "n" ]; then
+        echo -e "Please re-enter the name:"
+        read lmp_id
+    else
+        echo -e "Please use y or n only."
+    fi
+done
+    
 done
 
 sleep 2
@@ -136,4 +151,5 @@ $net_args \
 
 echo -e "\e[33m###The $name VM was installed###\e[0m"
 sleep 1
-
+virsh list
+sleep 1
