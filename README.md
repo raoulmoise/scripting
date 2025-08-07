@@ -7,7 +7,7 @@ This repository contains various scripts I have created to assist with my homela
 # 📂 Repo Structure
 
 # scripting/
-- [kvm-virt-install](virt-install.sh)
+# - [kvm-virt-install](virt-install.sh)
 
 ## KVM VM Installer Script
 
