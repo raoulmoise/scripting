@@ -94,6 +94,7 @@ sleep 2
 # Ask how many NICs the VM needs
 read -p "How many LMP interfaces do you want for this VM? " nic_count
 net_args=""
+net_sh=()
 
 for ((i=1; i<=nic_count; i++)); do
     echo -e "Enter VLAN ID for LMP \e[34m$i\e[0m: "
@@ -104,6 +105,7 @@ for ((i=1; i<=nic_count; i++)); do
     	if [ "$resp" = "y" ]; then
         	echo -e "The LMP ID is \e[34m$lmp_id\e[0m."
 			net_args+=" --network bridge=bondL-lmp-$lmp_id,model=virtio"
+   			net_sh+=($lmp_id)
         		break
     	elif [ "$resp" = "n" ]; then
         	echo -e "Please re-enter the name:"
@@ -116,6 +118,10 @@ for ((i=1; i<=nic_count; i++)); do
 done
 
 sleep 2
+
+#Create network script
+
+echo "${net_sh[@]}"
 
 #Verification if the VM exists
 
@@ -136,6 +142,13 @@ for i in {5..1}; do
     sleep 1
 done
 
+#Inject the network script into the image
+
+virt-customize -a $file \
+--copy-in ./network-script.sh:/home/user \
+--run-command "chmod +x /home/user/network-script.sh"
+
+sleep 1
 
 sudo virt-install \
 --name $name \
