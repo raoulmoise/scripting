@@ -1,6 +1,11 @@
+# This script is a personal automation tool for deploying VMs using libvirt/KVM.
+# It is not affiliated with any company or internal infrastructure.
+# All bridge/VLAN/interface naming is generic and example-based.
+
+
 #!/bin/bash
 
-echo -e "\e[33m###Welcome to the installation  script for SBTS Image for KVM!###\e[0m"
+echo -e "\e[33m###Welcome to the custom KVM VM installer script!###\e[0m"
 sleep 2
 now=$(date)
 echo -e "\e[33m$now\e[0m "
@@ -95,17 +100,17 @@ sleep 1
 #Management VLAN IP
 
 echo -e "Please provide the \e[36mmanagement IP with subnet\e[0m:"
-read ip_mng
+read ip_mainbr
 
 while true; do
-    echo -e "Is \e[36m$ip_mng\e[0m right? (y/n): "
+    echo -e "Is \e[36m$ip_mainbr\e[0m right? (y/n): "
     read -e resp
     if [ "$resp" = "y" ]; then
-        echo -e "The management IP is \e[36m$ip_mng\e[0m."
+        echo -e "The management IP is \e[36m$ip_mainbr\e[0m."
         break
     elif [ "$resp" = "n" ]; then
         echo -e "Please re-enter the management IP:"
-        read ip_mng
+        read ip_mainbr
     else
         echo -e "Please use y or n only."
     fi
@@ -116,17 +121,17 @@ sleep 1
 #Management VLAN Default GW
 
 echo -e "Please provide the \e[36mmanagement default GW\e[0m:"
-read mng_gw
+read mainbr_gw
 
 while true; do
-    echo -e "Is \e[36m$mng_gw\e[0m right? (y/n): "
+    echo -e "Is \e[36m$mainbr_gw\e[0m right? (y/n): "
     read -e resp
     if [ "$resp" = "y" ]; then
-        echo -e "The management gw IP is \e[36m$mng_gw\e[0m."
+        echo -e "The management gw IP is \e[36m$mainbr_gw\e[0m."
         break
     elif [ "$resp" = "n" ]; then
         echo -e "Please re-enter the management gateway:"
-        read mng_gw
+        read mainbr_gw
     else
         echo -e "Please use y or n only."
     fi
@@ -135,34 +140,34 @@ done
 sleep 1
 
 # Ask how many NICs the VM needs
-read -p "How many LMP interfaces do you want for this VM? " nic_count
+read -p "How many secbr interfaces do you want for this VM? " nic_count
 net_args=""
 net_sh=()
-lmp_sh=()
+secbr_sh=()
 
 for ((i=1; i<=nic_count; i++)); do
-    echo -e "Enter VLAN ID for LMP \e[36m$i\e[0m: "
-	read lmp_id
+    echo -e "Enter VLAN ID for secbr \e[36m$i\e[0m: "
+	read secbr_id
 	while true; do
-    echo -e "Is \e[36m$lmp_id\e[0m right? (y/n): "
+    echo -e "Is \e[36m$secbr_id\e[0m right? (y/n): "
     read -e resp
     if [ "$resp" = "y" ]; then
-        echo -e "The LMP ID is \e[36m$lmp_id\e[0m."
-		net_args+=" --network bridge=bondL-lmp-$lmp_id,model=virtio"
-		net_sh+=($lmp_id)
-		echo -e "Please provide the \e[36mLMP$i IP with subnet\e[0m:"
-		read lmp_ip
+        echo -e "The secbr ID is \e[36m$secbr_id\e[0m."
+		net_args+=" --network bridge=br-net-$secbr_id,model=virtio"
+		net_sh+=($secbr_id)
+		echo -e "Please provide the \e[36msecbr$i IP with subnet\e[0m:"
+		read secbr_ip
 
 			while true; do
-				echo -e "Is \e[36m$lmp_ip\e[0m right? (y/n): "
+				echo -e "Is \e[36m$secbr_ip\e[0m right? (y/n): "
 				read -e resp
 				if [ "$resp" = "y" ]; then
-					echo -e "The LMP\e[36m$i\e[0m IP is \e[36m$lmp_ip\e[0m."
-					lmp_sh+=($lmp_ip)
+					echo -e "The secbr\e[36m$i\e[0m IP is \e[36m$secbr_ip\e[0m."
+					secbr_sh+=($secbr_ip)
 					break
 				elif [ "$resp" = "n" ]; then
-					echo -e "Please re-enter the LMP$i IP:"
-					read lmp_ip
+					echo -e "Please re-enter the secbr$i IP:"
+					read secbr_ip
 				else
 					echo -e "Please use y or n only."
 				fi
@@ -170,7 +175,7 @@ for ((i=1; i<=nic_count; i++)); do
         break
     elif [ "$resp" = "n" ]; then
         echo -e "Please re-enter the name:"
-        read lmp_id
+        read secbr_id
     else
         echo -e "Please use y or n only."
     fi
@@ -181,7 +186,7 @@ done
 #Create network script
 
 echo "${net_sh[@]}"
-echo "${lmp_sh[@]}"
+echo "${secbr_sh[@]}"
 
 cat << EOF > interfaces
 
@@ -194,12 +199,12 @@ auto lo
 iface lo inet loopback
    dns-nameservers 1.1.1.1, 2.2.2.2, 3.3.3.3
 
-# bondM-mng-$vlan
+# bond-main-$vlan
 auto eth0
 iface eth0 inet static
-   address $ip_mng
-   post-up route add default gw $mng_gw || true
-   post-down route del default gw $mng_gw || true
+   address $ip_mainbr
+   post-up route add default gw $mainbr_gw || true
+   post-down route del default gw $mainbr_gw || true
      
 EOF
 
@@ -211,10 +216,10 @@ iface="eth$((i+1))"
 
 cat << EOF >> interfaces
 
-# bondL-mng-${net_sh[$i]}
+# bond-sec-${net_sh[$i]}
 auto $iface
 iface $iface inet static
-   address ${lmp_sh[$i]}
+   address ${secbr_sh[$i]}
 
 EOF
 
@@ -263,7 +268,7 @@ sudo virt-install \
 --os-variant debian12 \
 --vcpu 4 \
 --ram 8192 \
---network bridge:bondM-mng-$vlan \
+--network bridge:br-net-$vlan \
 $net_args \
 --graphics vnc \
 --import \
