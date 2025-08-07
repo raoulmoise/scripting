@@ -192,7 +192,7 @@ source /etc/network/interfaces.d/*
 # The loopback netw interfaces
 auto lo
 iface lo inet loopback
-   dns-nameservers 10.5.26.53 10.5.16.69 10.5.26.33 10.42.2.5
+   dns-nameservers 1.1.1.1, 2.2.2.2, 3.3.3.3
 
 # bondM-mng-$vlan
 auto eth0
