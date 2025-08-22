@@ -141,6 +141,21 @@ sleep 1
 
 # Ask how many NICs the VM needs
 read -p "How many secbr interfaces do you want for this VM? " nic_count
+
+while true; do
+    echo -e "Is the number of secondary interfaces \e[36m$nic_count\e[0m right? (y/n): "
+    read -e resp
+    if [ "$resp" = "y" ]; then
+        echo -e "The number of secondary interfaces: \e[36m$nic_count\e[0m."
+        break
+    elif [ "$resp" = "n" ]; then
+        echo -e "Please re-enter the number of secondary interfaces you will use:"
+        read vlan
+    else
+        echo -e "Please use y or n only."
+    fi
+done
+
 net_args=""
 net_sh=()
 secbr_sh=()
@@ -262,6 +277,7 @@ virt-customize -a $file \
 sleep 1
 
 #Start of the VM installation
+# You can manually modify the vCPU and RAM in the following lines.
 
 sudo virt-install \
 --name $name \
