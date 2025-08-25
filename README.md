@@ -55,4 +55,8 @@ This Bash script automates the configuration of the SNMPv3 settings on a Rocki L
 - Configure the SNMP file with the user input variables.
 - Add the UDP 161 to the internal firewall
 
+### 🚧 Requirements
+- Rocky Linux 8.x, 9.x, 10.x
+- Run as root or with sudo
+
 ---
