@@ -28,17 +28,13 @@ This is a personal project and is not affiliated with any company or internal in
 ---
 
 # - [kvm-virsh-shutdown](https://github.com/raoulmoise/scripting/blob/main/virsh-shutdown.sh)
-
 ## 🗃️ KVM Mass Shutdown Script
 
 This Bash script automates shutting down all running KVM virtual machines managed by `virsh`.
 
----
-
 ### 🧠 Features
 - Lists all defined VMs and saves their names to `virshname.txt`.
 - Displays the currently running VMs before shutdown.
-- Provides a warning message before execution.
 - Iterates over all running VMs and gracefully shuts them down with `virsh shutdown`.
 - Adds a small delay between shutdown commands to avoid conflicts.
 - Shows the updated VM status after execution.
@@ -48,8 +44,15 @@ This Bash script automates shutting down all running KVM virtual machines manage
 
 ---
 
-## Debian SNMPv3 auto-configure | *(Coming soon)* |
+# - [snmpv3-rocky-librenms](https://github.com/raoulmoise/scripting/blob/main/snmpv3-rockylinux-librenmsintegration.sh)
+## 🗃️ Rocky Linux SNMPv3 configuration for LibreNMS integration | *(Coming soon)* |
+
+This Bash script automates the configuration of the SNMPv3 settings on a Rocki Linux device for LibreNMS integration.
+
+### 🧠 Features
+- Prompts for SNMP User, Password, and Authentication methods.
+- Install the dependencies and SNMP packages for Rocky Linux.
+- Configure the SNMP file with the user input variables.
+- Add the UDP 161 to the internal firewall
 
 ---
-
-
