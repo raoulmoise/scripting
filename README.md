@@ -45,7 +45,7 @@ This Bash script automates shutting down all running KVM virtual machines manage
 ---
 
 # - [snmpv3-rocky-librenms](https://github.com/raoulmoise/scripting/blob/main/snmpv3-rockylinux-librenmsintegration.sh)
-## 🗃️ Rocky Linux SNMPv3 configuration for LibreNMS integration | *(Coming soon)* |
+## 🗃️ Rocky Linux SNMPv3 configuration for LibreNMS integration 
 
 This Bash script automates the configuration of the SNMPv3 settings on a Rocki Linux device for LibreNMS integration.
 
