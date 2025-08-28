@@ -25,6 +25,11 @@ This is a personal project and is not affiliated with any company or internal in
 ### 🚧 Requirements
 - `virt-install`, `virt-customize`, `libvirt`, `KVM`
 
+## ▶️ Usage
+1. Copy the script to the target host and make it executable:
+   ```bash
+   chmod +x kvm-virt-install.sh
+
 ---
 
 # - [kvm-virsh-shutdown](https://github.com/raoulmoise/scripting/blob/main/virsh-shutdown.sh)
@@ -42,6 +47,11 @@ This Bash script automates shutting down all running KVM virtual machines manage
 ### 🚧 Requirements
 - `virt-install`, `virt-customize`, `libvirt`, `KVM`
 
+## ▶️ Usage
+1. Copy the script to the target host and make it executable:
+   ```bash
+   chmod +x kvm-virsh-shutdown.sh
+
 ---
 
 # - [snmpv3-rocky-librenms](https://github.com/raoulmoise/scripting/blob/main/snmpv3-rockylinux-librenmsintegration.sh)
@@ -58,5 +68,42 @@ This Bash script automates the configuration of the SNMPv3 settings on a Rocki L
 ### 🚧 Requirements
 - Rocky Linux 8.x, 9.x, 10.x
 - Run as root or with sudo
+
+
+## ▶️ Usage
+1. Copy the script to the target host and make it executable:
+   ```bash
+   chmod +x snmpv3-rocky-librnms.sh
+
+---
+
+# - [network-bond-file](https://github.com/raoulmoise/scripting/blob/main/network-bond-file.sh)
+# 🛠️ Bridge + VLAN Config Generator (KVM - Rocky Linux)
+
+This Bash script generates legacy `network-scripts` files to create a **bridge** on top of a **VLAN-on-bond** interface (e.g., `bridge-100` over `bond0.100`) for KVM hosts.
+
+---
+
+## 🧠 Features
+- Verifies you run it from `/etc/sysconfig/network-scripts`.
+- Prompts for **VLAN ID** and **bond interface** (default `bond0`).
+- Generates:
+  - `ifcfg-bridge-<VLAN>` (Bridge)
+  - `ifcfg-<BOND>.<VLAN>` (VLAN-on-bond)
+- Sets sane defaults: `ONBOOT=yes`, `BOOTPROTO=none`, `NM_CONTROLLED=no`.
+- Prints the generated files so you can review before applying.
+
+---
+
+## 🚧 Requirements
+- Rocky Linux using legacy **network-scripts**.
+- Root privileges to place files in `/etc/sysconfig/network-scripts`.
+- KVM/libvirt host (for the bridge to be used by `virsh`/`libvirt` networks).
+- Tools: standard GNU userland (`bash`, `cat`, etc.).
+
+## ▶️ Usage
+1. Copy the script to the target host and make it executable:
+   ```bash
+   chmod +x network-bond-file.sh
 
 ---
