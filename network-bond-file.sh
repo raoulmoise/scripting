@@ -22,13 +22,13 @@ fi
 #User input for network interface
 
 echo -e "Please provide the name of the interface:"
-read int
+read vlan
 
 while true; do
-    echo -e "Is \e[36m$int\e[0m right? (y/n): "
+    echo -e "Is \e[36m$vlan\e[0m right? (y/n): "
     read -e resp
     if [ "$resp" = "y" ]; then
-        echo -e "The network interface is \e[36m$int\e[0m."
+        echo -e "The network interface is \e[36m$vlan\e[0m."
         break
     elif [ "$resp" = "n" ]; then
         echo -e "Please re-enter the name of the interface:"
@@ -42,8 +42,8 @@ done
 #Generating the script files
 
 #Bridge config
-cat << EOF > ifcfg-bridge-$int
-DEVICE=bridge-$int
+cat << EOF > ifcfg-bridge-$vlan
+DEVICE=bridge-$vlan
 TYPE=Bridge
 BOOTPROTO=none
 ONBOOT=yes
@@ -51,20 +51,20 @@ DELAY=0
 NM_CONTROLLED=no
      
 EOF
-echo "Generated: ifcfg-bridge-$int"
-cat ifcfg-bridge-$int
+echo "Generated: ifcfg-bridge-$vlan"
+cat ifcfg-bridge-$vlan
 
 #Vlan-on-bond config
-cat << EOF > ifcfg-bond.$int
+cat << EOF > ifcfg-bond.$vlan
 TYPE=Ethernet
 BOOTPROTO=none
-DEVICE=bond.$int
+DEVICE=bond.$vlan
 ONBOOT=yes
 VLAN=yes
-BRIDGE=bridge-$int
+BRIDGE=bridge-$vlan
      
 EOF
-echo "Generated: ifcfg-bond.$int"
-cat ifcfg-bond.$int
+echo "Generated: ifcfg-bond.$vlan"
+cat ifcfg-bond.$vlan
 
 echo -e "\e[32mDone. Review files, then apply changes (e.g., 'systemctl restart network').\e[0m"
