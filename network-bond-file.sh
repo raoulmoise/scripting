@@ -1,3 +1,7 @@
+# This script is a personal automation tool for deploying VMs using libvirt/KVM.
+# It is not affiliated with any company or internal infrastructure.
+# All bridge/VLAN/interface naming is generic and example-based.
+
 #!/bin/bash
 set -euo pipefail
 
