@@ -4,6 +4,7 @@
 
 
 #!/bin/bash
+set -euo pipefail
 
 echo -e "\e[33m###Welcome to the custom KVM VM installer script!###\e[0m"
 sleep 2
