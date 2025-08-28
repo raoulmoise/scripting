@@ -1,4 +1,5 @@
 #! /bin/bash
+set -euo pipefail
 
 #SNMPv3 configuration script for LibreNMS integration
 
