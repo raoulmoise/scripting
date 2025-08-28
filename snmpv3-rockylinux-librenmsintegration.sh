@@ -1,3 +1,6 @@
+# This script is a personal automation tool for deploying VMs using libvirt/KVM/RockyLinux.
+# It is not affiliated with any company or internal infrastructure.
+
 #! /bin/bash
 set -euo pipefail
 
