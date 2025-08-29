@@ -7,7 +7,7 @@ This repository contains various scripts I have created to assist with my homela
 # 📂 Repo Structure
 
 # scripting/
-# - [kvm-virt-install](https://github.com/raoulmoise/scripting/blob/main/virt-install.sh)
+# - [kvm-virt-install](https://github.com/raoulmoise/scripting/blob/main/kvm-virt-install/virt-install.sh)
 
 ## 🗃️ KVM VM Installer Script
 
@@ -32,7 +32,7 @@ This is a personal project and is not affiliated with any company or internal in
 
 ---
 
-# - [kvm-virsh-shutdown](https://github.com/raoulmoise/scripting/blob/main/virsh-shutdown.sh)
+# - [kvm-virsh-shutdown](https://github.com/raoulmoise/scripting/blob/main/kvm-virsh-shutdown/virsh-shutdown.sh)
 ## 🗃️ KVM Mass Shutdown Script
 
 This Bash script automates shutting down all running KVM virtual machines managed by `virsh`.
@@ -54,7 +54,7 @@ This Bash script automates shutting down all running KVM virtual machines manage
 
 ---
 
-# - [snmpv3-rocky-librenms](https://github.com/raoulmoise/scripting/blob/main/snmpv3-rockylinux-librenmsintegration.sh)
+# - [snmpv3-rocky-librenms](https://github.com/raoulmoise/scripting/blob/main/snmpv3-rocky/snmpv3-rockylinux-librenmsintegration.sh)
 ## 🗃️ Rocky Linux SNMPv3 configuration for LibreNMS integration 
 
 This Bash script automates the configuration of the SNMPv3 settings on a Rocki Linux device for LibreNMS integration.
@@ -77,7 +77,7 @@ This Bash script automates the configuration of the SNMPv3 settings on a Rocki L
 
 ---
 
-# - [network-bond-file](https://github.com/raoulmoise/scripting/blob/main/network-bond-file.sh)
+# - [network-bond-file](https://github.com/raoulmoise/scripting/blob/main/network-bond-file/network-bond-file.sh)
 ## 🛠️ Bridge + VLAN Config Generator (KVM - Rocky Linux)
 
 This Bash script generates legacy `network-scripts` files to create a **bridge** on top of a **VLAN-on-bond** interface (e.g., `bridge-100` over `bond0.100`) for KVM hosts.
